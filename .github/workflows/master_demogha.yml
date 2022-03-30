@@ -58,11 +58,11 @@ jobs:
         with:
           app-name: 'demogha'
           slot-name: 'Staging'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_STAGING_ENV }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: deploy-to-staging
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -79,5 +79,5 @@ jobs:
         with:
           app-name: 'demogha'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3F9578A280C249D69E12A0D68668C1DB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
