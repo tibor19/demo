@@ -93,11 +93,13 @@ jobs:
     needs: deploy-to-staging
     environment:
       name: 'Production'
-      # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      url: ${{ steps.swap-slots.outputs.webapp-url }}
     steps:
       - name: Azure Login
         with:
           creds: ${{secrets.AZURE_CREDENTIALS}}
       - name: Swap slots
+        id: swap-slots
         run: |
           az webapp deployment slot swap -n ${{ env.APP_NAME }} -g ${{ env.RG_NAME }} -s ${{ env.STAGING_SLOT }}
+          echo "::set-output name=webapp-url::'https://'$(az webapp show -n ${{ env.APP_NAME }} -g ${{ env.RG_NAME }} --query defaultHostName -o tsv)"
