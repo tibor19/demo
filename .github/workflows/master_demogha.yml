@@ -66,7 +66,8 @@ jobs:
           az group create -n ${{ env.RG_NAME }} --location ${{ env.LOCATION }}
           az appservice plan create -n asp-${{ env.APP_NAME }} -g ${{ env.RG_NAME }} --sku S1 --location ${{ env.LOCATION }}
           az webapp create -n ${{ env.APP_NAME }} -g ${{ env.RG_NAME }} --plan asp-${{ env.APP_NAME }}
-          az webapp deployment slot swap -n ${{ env.APP_NAME }} -g ${{ env.RG_NAME }} -s ${{ env.STAGING_SLOT }}
+          az webapp deployment slot create -n ${{ env.APP_NAME }} -g ${{ env.RG_NAME }} -s ${{ env.STAGING_SLOT }}
+          # az webapp deployment slot swap -n ${{ env.APP_NAME }} -g ${{ env.RG_NAME }} -s ${{ env.STAGING_SLOT }}
 
   deploy-to-staging:
     runs-on: ubuntu-latest
